@@ -1,0 +1,6 @@
+Técnicas
+
+Zero-Shot
+Chain of Through
+RAG
+Tools
