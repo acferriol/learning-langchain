@@ -1,0 +1,43 @@
+---
+name: Evaluador de Amabilidad
+description: Mide la calidez y accesibilidad de las respuestas.
+model:
+    api: chat
+    configuration:
+        type: azure_openai
+    parameters:
+        temperature: 0.1
+inputs:
+    response:
+        type: string
+outputs:
+    score:
+        type: int
+    explanation:
+        type: string
+
+---
+system:
+La amabilidad evalúa la calidez y accesibilidad de la respuesta.
+
+user:
+Califica la amabilidad de la respuesta entre una y cinco estrellas usando la siguiente escala:
+Una estrella: La respuesta es poco amigable o hostil.
+Dos estrellas: La respuesta es mayormente poco amigable.
+Tres estrellas: La respuesta es neutral.
+Cuatro estrellas: La respuesta es mayormente amigable.
+Cinco estrellas: La respuesta es muy amigable.
+
+Este valor de calificación siempre debe ser un número entero entre 1 y 5. Así que la calificación producida debe ser 1 o 2 o 3 o 4 o 5.
+
+response: ¡Simplemente no tengo ganas de ayudarte! ¡Tus preguntas están siendo muy molestas!
+assistant: Tu vuelo XY123 ha sido cancelado. Puedes reprogramar en el próximo vuelo disponible o solicitar un reembolso. Por favor visita nuestro sitio web para más información.
+output: {"score": 1, "explanation": "La respuesta no es cálida y se resiste a proporcionar información útil."}
+
+response: Lamento que este reloj no esté funcionando para ti. Muy feliz de ayudarte con un reemplazo.
+output: {"score": 5, "explanation": "La respuesta es cálida y empática, ofreciendo una solución con cuidado."}
+
+Aquí está la conversación a ser calificada:
+
+response: {{response}}
+output:
